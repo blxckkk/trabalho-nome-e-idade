@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    // Declaração dos vetores
+    char nomes[5][50];
+    int idades[5];
+
+    // Variáveis auxiliares
+    int i;
+    int soma_idades = 0;
+    float media;
+    int maiores_idade = 0;
+    int adolescentes = 0;
+    int indice_mais_velho = 0;
+    int indice_mais_novo = 0;
+
+    printf("=== SISTEMA DE CADASTRO DE IDADES ===\n\n");
+
+    for(i = 0; i < 5; i++) {
+        printf("Digite o nome da pessoa: ", i + 1);
+        fflush(stdin); // Limpa o buffer
+        fgets(nomes[i], 50, stdin);
+
+        if(nomes[i][strlen(nomes[i]) - 1] == '\n') {
+            nomes[i][strlen(nomes[i]) - 1] = '\0';
+        }
+
+        printf("Digite a idade de %s: ", nomes[i]);
+        scanf("%d", &idades[i]);
+
+        soma_idades += idades[i];
+
+        if(idades[i] > idades[indice_mais_velho]) {
+            indice_mais_velho = i;
+        }
+
+        if(i == 0 || idades[i] < idades[indice_mais_novo]) {
+            indice_mais_novo = i;
+        }
+
+        if(idades[i] >= 18) {
+            maiores_idade++;
+        }
+
+        if(idades[i] >= 13 && idades[i] <= 17) {
+            adolescentes++;
+        }
+
+        printf("\n");
+    }
+
+    media = (float)soma_idades / 5;
+
+    printf("\n=== RESULTADOS ===\n\n");
+
+    printf("1. Lista completa:\n");
+    for(i = 0; i < 5; i++) {
+        printf("   %s - %d anos\n", nomes[i], idades[i]);
+    }
+
+    printf("\n2. Pessoa mais velha: %s (%d anos)\n",
+           nomes[indice_mais_velho], idades[indice_mais_velho]);
+
+    printf("\n3. Pessoa mais nova: %s (%d anos)\n",
+           nomes[indice_mais_novo], idades[indice_mais_novo]);
+
+    printf("\n4. Media das idades: %.2f anos\n", media);
+
+    printf("\n5. Maiores de idade (≥18 anos): %d pessoa(s)\n", maiores_idade);
+
+    printf("\n6. Adolescentes (13-17 anos): %d pessoa(s)\n", adolescentes);
+
+    printf("\n7. Classificação por faixa etária:\n");
+    for(i = 0; i < 5; i++) {
+        printf("   %s: ", nomes[i]);
+        if(idades[i] < 13) {
+            printf("Crianca\n");
+        } else if(idades[i] >= 13 && idades[i] <= 17) {
+            printf("Adolescente\n");
+        } else {
+            printf("Adulto\n");
+        }
+    }
+
+    printf("\n=== FIM DO PROGRAMA ===\n");
+
+    return 0;
+}
